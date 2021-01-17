@@ -1,0 +1,28 @@
+{% extends 'blogs/base.html' %}
+
+{% block page_header %}
+    {% if user.is_authenticated %}
+        <button type="button" class="btn btn-secondary btn-sm"><h4><a href="{% url 'blogs:my_blogs' %}" class="text-white">My blogs &raquo</a></h4></button>
+    {% endif %}
+{% endblock page_header %}
+
+
+{% block content %}
+    
+    <div class="card mb-3">
+        <div class="card-header">
+            <h4 class="card-title">
+                {{ blog.title }}
+                {% if blog.owner|stringformat:"s" == user.username %}
+                <small><a href="{% url 'blogs:edit_blog' blog.id %}">Edit blog</a></small>
+                {% endif %}
+                <small class="card-subtitle text-muted float-right">{{ blog.date_added|date:'M d, Y H:i' }}</small>
+                <footer class="blockquote-footer"><cite title="Source Title">{{ blog.owner }}</cite></footer>
+            </h4>
+        </div>
+        <div class="card-body">
+            {{ blog.text|linebreaks|urlize }}
+        </div>
+    </div>
+
+{% endblock content %}

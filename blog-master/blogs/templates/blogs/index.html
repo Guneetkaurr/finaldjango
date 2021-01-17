@@ -1,0 +1,23 @@
+{% extends 'blogs/base.html' %}
+
+{% block page_header %}
+<div>
+<p class="h3 d-inline-block">Blogs :</p>
+<button type="button" class="btn btn-secondary btn-sm float-right d-inline-block"><h4><a href="{% url 'blogs:new_blog' %}" class="text-white">Write a new blog &raquo</a></h4></button>
+</div>
+{% endblock page_header %}
+
+{% block content %}
+    
+    {% for b in blogs %}
+    <a href="{% url 'blogs:blog' b.id %}" class="list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">{{ b.title }}</h5>
+          <footer class="blockquote-footer"><cite title="Source Title">{{ b.owner }}</cite></footer>
+          <small class="text-muted">{{ b.date_added|date:'M d, Y H:i' }}</small>
+        </div>
+    </a>
+    {% empty %}
+    <li>No blogs have been added yet.</li>
+    {% endfor %}
+{% endblock content %}
